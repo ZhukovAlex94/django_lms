@@ -53,4 +53,3 @@ class Student(models.Model):
                 st.save()
             except:
                 print('Incorrect data')
-

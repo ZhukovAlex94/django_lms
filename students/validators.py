@@ -31,4 +31,3 @@ def validate_unique_email(email):
     if models.Student.objects.filter(email__iexact=email).exists():
         raise ValidationError(f'Entered email: <<{email}>> already existing in the system.')
     return email
-
