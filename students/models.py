@@ -5,7 +5,7 @@ from django.db import models
 
 from faker import Faker
 
-from .validators import ValidEmailDomain
+from .validators import ValidEmailDomain, validate_unique_email
 
 VALID_DOMAIN_LIST = ('@gmail.com', '@yahoo.com', '@test.com')
 
@@ -28,7 +28,9 @@ class Student(models.Model):
 
     # gmail.com, yahoo.com, test.com
     # email = models.EmailField(validators=[valid_email_domains])
-    email = models.EmailField(validators=[ValidEmailDomain(*VALID_DOMAIN_LIST)])
+    # email = models.EmailField(validators=[ValidEmailDomain(*VALID_DOMAIN_LIST)])
+    # email = models.EmailField(validators=[ValidEmailDomain(*VALID_DOMAIN_LIST)], unique=True)
+    email = models.EmailField(validators=[ValidEmailDomain(*VALID_DOMAIN_LIST), validate_unique_email])
 
     def __str__(self):
         return f'{self.id} - {self.first_name} {self.last_name}'
@@ -51,3 +53,4 @@ class Student(models.Model):
                 st.save()
             except:
                 print('Incorrect data')
+
