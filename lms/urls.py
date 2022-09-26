@@ -19,12 +19,14 @@ from django.urls import path
 from students.views import create_student
 from students.views import get_students
 from students.views import index
+from students.views import update_student
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
     path('students/', get_students),
     path('students/create/', create_student),
+    path('students/update/', update_student),
 ]
 
 # https://docs.djangoproject.com:8000/en/4.1/topics/http/urls/

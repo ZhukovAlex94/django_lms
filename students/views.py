@@ -78,3 +78,7 @@ def create_student(request):
     '''
 
     return HttpResponse(html_form)
+
+
+def update_student(request):
+    return None

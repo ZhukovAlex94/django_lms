@@ -12,12 +12,26 @@ class CreateStudentForm(forms.ModelForm):
           'last_name',
           'birthday',
           'email',
+          'phone_number',
         ]
 
-    def clean(self):
-        pass
+    # def clean(self):
+    #     clean_data = super().clean()
+    #     if 'first_name' in clean_data:
+    #         clean_data['first_name'] = clean_data['first_name'].title()
+    #     return clean_data
 
     def clean_birthday(self):
         value = self.cleaned_data.get('birthday')
 
         return value
+
+    def clean_first_name(self):
+        return self.cleaned_data['first_name'].title()
+
+    def clean_last_name(self):
+        return self.cleaned_data['last_name'].title()
+
+    def clean_phone_number(self):
+        value = self.cleaned_data['phone_number']
+        return "".join(char for char in value if char in "0123456789-()")

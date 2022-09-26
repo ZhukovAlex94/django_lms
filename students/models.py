@@ -33,6 +33,11 @@ class Student(models.Model):
     # email = models.EmailField(validators=[ValidEmailDomain(*VALID_DOMAIN_LIST)], unique=True)
     email = models.EmailField(validators=[ValidEmailDomain(*VALID_DOMAIN_LIST), validate_unique_email])
 
+    phone_number = models.CharField(
+        max_length=50,
+        verbose_name='phone_number'
+    )
+
     def __str__(self):
         return f'{self.id} - {self.first_name} {self.last_name}'
 
