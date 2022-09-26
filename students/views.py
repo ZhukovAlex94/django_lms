@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.middleware.csrf import get_token
 from django.shortcuts import render     # noqa
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt    # noqa
 
 from webargs.djangoparser import use_args
 from webargs.fields import Str
@@ -45,7 +45,7 @@ def get_students(request, args):
           <label for="lname">Last name:</label>
           <input type="text" id="lname" name="last_name" placeholder="Doe"><br><br>
           <input type="submit" value="Submit">
-        </form> 
+        </form>
     '''
 
     html = qs2html(students)
@@ -72,9 +72,9 @@ def create_student(request):
             <input type="hidden" name="csrfmiddlewaretoken" value="{token}">
             <table>
                 {form.as_table()}
-            </table>    
+            </table>
             <input type="submit" value="Submit">
-        </form> 
+        </form>
     '''
 
     return HttpResponse(html_form)
