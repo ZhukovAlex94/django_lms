@@ -2,6 +2,8 @@
 from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
 
+from students import models
+
 
 def valid_email_domains(value):
     valid_domains = ['@gmail.com', '@yahoo.com']
@@ -23,3 +25,9 @@ class ValidEmailDomain:
                 break
         else:
             raise ValidationError(f'Invalid email address. The domain <<{args[0].split("@")[1]} not valid.')
+
+
+def validate_unique_email(email):
+    if models.Student.objects.filter(email__iexact=email).exists():
+        raise ValidationError(f'Entered email: <<{email}>> already existing in the system.')
+    return email
