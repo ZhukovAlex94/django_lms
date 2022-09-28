@@ -1,15 +1,16 @@
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.middleware.csrf import get_token
-from django.shortcuts import render     # noqa
-from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt    # noqa
 
 from webargs.djangoparser import use_args
 from webargs.fields import Str
 
 from .forms import CreateStudentForm
+from .forms import UpdateStudentForm
 from .models import Student
-from .utils import qs2html
+from .utils import qs2html  # noqa
 
 
 # HttpRequest
@@ -31,30 +32,19 @@ def get_students(request, args):
         students = students.filter(
             Q(first_name=args.get('first_name', '')) | Q(last_name=args.get('last_name', ''))
         )
-# filed like ''
-    # if 'first_name' in args:
-    #     students = students.filter(first_name=args['first_name'])
-    #
-    # if 'last_name' in args:
-    #     students = students.filter(last_name=args['last_name'])
 
-    html_form = '''
-        <form method="get">
-          <label for="fname">First name:</label>
-          <input type="text" id="fname" name="first_name" placeholder="John"><br><br>
-          <label for="lname">Last name:</label>
-          <input type="text" id="lname" name="last_name" placeholder="Doe"><br><br>
-          <input type="submit" value="Submit">
-        </form> 
-    '''
+    return render(request=request,
+                  template_name='students/list.html',
+                  context={
+                      'title': 'List of students',
+                      'students': students,
+                  }
+                  )
 
-    html = qs2html(students)
 
-    # HttpResponse
-    # response = HttpResponse('Hello World!')
-    response = HttpResponse(html_form + html)
-    return response
-
+def detail_student(request, student_id):
+    student = Student.objects.get(pk=student_id)
+    return render(request, 'students/detail.html', {'student': student})
 
 # @csrf_exempt
 def create_student(request):
@@ -72,9 +62,34 @@ def create_student(request):
             <input type="hidden" name="csrfmiddlewaretoken" value="{token}">
             <table>
                 {form.as_table()}
-            </table>    
+            </table>
             <input type="submit" value="Submit">
-        </form> 
+        </form>
+    '''
+
+    return HttpResponse(html_form)
+
+
+def update_student(request, student_id):
+    student = Student.objects.get(pk=student_id)
+
+    if request.method == 'GET':
+        form = UpdateStudentForm(instance=student)
+    elif request.method == 'POST':
+        form = UpdateStudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/students/')
+
+    token = get_token(request)
+    html_form = f'''
+        <form method="post">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{token}">
+            <table>
+                {form.as_table()}
+            </table>
+            <input type="submit" value="Submit">
+        </form>
     '''
 
     return HttpResponse(html_form)
