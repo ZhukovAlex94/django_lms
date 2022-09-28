@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from students.views import create_student
+from students.views import detail_student
 from students.views import get_students
 from students.views import index
 from students.views import update_student
@@ -26,7 +27,8 @@ urlpatterns = [
     path('', index),
     path('students/', get_students),
     path('students/create/', create_student),
-    path('students/update/', update_student),
+    path('students/detail/<int:student_id>/', detail_student),
+    path('students/update/<int:student_id>/', update_student),
 ]
 
 # https://docs.djangoproject.com:8000/en/4.1/topics/http/urls/
