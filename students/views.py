@@ -46,6 +46,7 @@ def detail_student(request, student_id):
     student = Student.objects.get(pk=student_id)
     return render(request, 'students/detail.html', {'student': student})
 
+
 # @csrf_exempt
 def create_student(request):
     if request.method == 'GET':
