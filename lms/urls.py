@@ -25,8 +25,8 @@ from students.views import update_student
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
-    path('students/create/', create_student),
     path('students/', get_students),
+    path('students/create/', create_student),
     path('students/detail/<int:student_id>/', detail_student),
     path('students/update/<int:student_id>/', update_student),
 ]
