@@ -6,7 +6,7 @@ from django.db import models
 
 from faker import Faker
 
-from .validators import ValidEmailDomain, validate_unique_email
+from core.validators import ValidEmailDomain, validate_unique_email
 
 VALID_DOMAIN_LIST = ('@gmail.com', '@yahoo.com', '@test.com')
 
