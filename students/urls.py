@@ -1,11 +1,10 @@
 from django.urls import path
 
 from .views import create_student
+from .views import delete_student
 from .views import detail_student
 from .views import get_students
 from .views import update_student
-from .views import delete_student
-
 
 app_name = 'student'
 
