@@ -8,8 +8,7 @@ from django.views.decorators.csrf import csrf_exempt  # noqa
 from webargs.djangoparser import use_args
 from webargs.fields import Str
 
-from .forms import CreateStudentForm
-from .forms import UpdateStudentForm
+from .forms import CreateStudentForm, UpdateStudentForm
 from .models import Student
 from .utils import qs2html  # noqa
 

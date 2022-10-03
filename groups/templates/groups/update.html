@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}Update student{% endblock %}
+{% block title %}
+Update group
+{% endblock %}
 
 {% block content %}
     <form method="post">
@@ -9,6 +11,6 @@
             {{ form.as_table }}
         </table>
         <input type="submit" value="Update">
-        <a href="{% url 'student:list' %}">Cancel</a>
+        <a href="{% url 'groups:list' %}">Cancel</a>
     </form>
 {% endblock %}

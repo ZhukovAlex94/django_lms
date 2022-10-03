@@ -8,7 +8,6 @@ from django.db import models
 
 from faker import Faker
 
-
 VALID_DOMAIN_LIST = ('@gmail.com', '@yahoo.com', '@test.com')
 
 

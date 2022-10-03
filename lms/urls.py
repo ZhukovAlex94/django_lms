@@ -18,33 +18,14 @@ from core.views import index
 from django.contrib import admin
 from django.urls import include, path
 
-
-from groups.views import get_groups
-from groups.views import detail_group
-from groups.views import update_group
-
-from teachers.views import get_teachers
-from teachers.views import detail_teacher
-from teachers.views import update_teacher
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='home'),
     path('students/', include('students.urls')),
-    path('', index),
-    path('students/', get_students),
-    path('students/create/', create_student),
-    path('students/detail/<int:student_id>/', detail_student),
-    path('students/update/<int:student_id>/', update_student),
 
+    path('groups/', include('groups.urls')),
 
-    path('groups/', get_groups),
-    path('groups/detail/<int:group_id>/', detail_group),
-    path('groups/update/<int:group_id>/', update_group),
-
-    path('teachers/', get_teachers),
-    path('teachers/detail/<int:teacher_id>/', detail_teacher),
-    path('teachers/update/<int:teacher_id>/', update_teacher),
+    path('teachers/', include('teachers.urls')),
 ]
 
 # https://docs.djangoproject.com:8000/en/4.1/topics/http/urls/
