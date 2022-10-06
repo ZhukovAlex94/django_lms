@@ -12,6 +12,10 @@ class CreateGroupForm(forms.ModelForm):
             'group_description',
         ]
 
+        widgets = {
+            'group_start_date': forms.DateInput(attrs={'type': 'date'})
+        }
+
 
 class UpdateGroupForm(forms.ModelForm):
     class Meta:
