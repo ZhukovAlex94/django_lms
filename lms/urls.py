@@ -18,11 +18,14 @@ from core.views import index
 from django.contrib import admin
 from django.urls import include, path
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='home'),
     path('students/', include('students.urls')),
+
+    path('groups/', include('groups.urls')),
+
+    path('teachers/', include('teachers.urls')),
 ]
 
 # https://docs.djangoproject.com:8000/en/4.1/topics/http/urls/

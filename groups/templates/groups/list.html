@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{{% endblock %}
+
+{% block content %}
+    <form method="get">
+        <label for="fname">Group name:</label>
+        <input type="text" id="fname" name="group_name" placeholder="Class 'example'">
+        <input type="submit" value="Submit">
+    </form>
+    <br><br>
+    <table>
+    {% for group in groups %}
+        <tr>
+            <td>{{ group.pk }}</td>
+            <td><a href="{% url 'groups:detail' group.pk %}">{{ group.group_name }}</a></td>
+            <td><a href="{% url 'groups:update' group.pk %}">Edit</a></td>
+            <td><a href="{% url 'groups:delete' group.pk %}">Delete</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

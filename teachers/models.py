@@ -8,10 +8,10 @@ from django.db import models
 
 from faker import Faker
 
-VALID_DOMAIN_LIST = ('@gmail.com', '@yahoo.com', '@test.com')
+VALID_DOMAIN_LIST = ('@gmail.com', '@yahoo.com', '@test.com', '@icloud.com', '@tenet.com')
 
 
-class Student(models.Model):
+class Teacher(models.Model):
     first_name = models.CharField(
         max_length=100,
         verbose_name='first name',
@@ -25,12 +25,15 @@ class Student(models.Model):
         validators=[MinLengthValidator(2)],
         error_messages={'min_length': '"last_name" field less than two symbols'}
     )
+
+    job = models.CharField(
+        max_length=100,
+        verbose_name='job',
+        db_column='job_column',
+    )
+
     birthday = models.DateField(default=date.today, null=True, blank=True)
 
-    # gmail.com, yahoo.com, test.com
-    # email = models.EmailField(validators=[valid_email_domains])
-    # email = models.EmailField(validators=[ValidEmailDomain(*VALID_DOMAIN_LIST)])
-    # email = models.EmailField(validators=[ValidEmailDomain(*VALID_DOMAIN_LIST)], unique=True)
     email = models.EmailField(validators=[ValidEmailDomain(*VALID_DOMAIN_LIST), validate_unique_email])
 
     phone_number = models.CharField(
@@ -42,7 +45,7 @@ class Student(models.Model):
         return f'{self.id} - {self.first_name} {self.last_name}'
 
     class Meta:
-        db_table = 'students'
+        db_table = 'teachers'
 
     @classmethod
     def generate_fake_data(cls, cnt):
@@ -51,11 +54,14 @@ class Student(models.Model):
         for _ in range(cnt):
             first_name = f.first_name()
             last_name = f.last_name()
+            job = f.job()
             email = f'{first_name}.{last_name}{f.random.choice(VALID_DOMAIN_LIST)}'
             birthday = f.date()
-            st = cls(first_name=first_name, last_name=last_name, birthday=birthday, email=email)
+            phone_number = f.phone_number()
+            t = cls(first_name=first_name, last_name=last_name, job=job, birthday=birthday, email=email,
+                    phone_number=phone_number)
             try:
-                st.full_clean()
-                st.save()
+                t.full_clean()
+                t.save()
             except ValidationError:
                 print('Incorrect data')
