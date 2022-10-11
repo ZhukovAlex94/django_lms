@@ -1,38 +1,21 @@
-from django.db.models import Q
-from django.http import HttpResponse    # noqa
 from django.http import HttpResponseRedirect
-from django.middleware.csrf import get_token    # noqa
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt  # noqa
 
-from webargs.djangoparser import use_args
-from webargs.fields import Str
-
-from .forms import CreateGroupForm, UpdateGroupForm
+from .forms import CreateGroupForm, GroupFilterForm, UpdateGroupForm
 from .models import Group
 
 
-@use_args(
-    {
-        'group_name': Str(required=False),
-    },
-    location='query'
-)
-def get_groups(request, args):
+def get_groups(request):
     groups = Group.objects.all()
 
-    if len(args) and args.get('group_name'):
-        groups = groups.filter(
-            Q(group_name=args.get('group_name'))
-        )
+    filter_form = GroupFilterForm(data=request.GET, queryset=groups)
 
     return render(
         request=request,
         template_name='groups/list.html',
         context={
-            'title': 'List of groups',
-            'groups': groups,
+            'filter_form': filter_form,
         }
     )
 

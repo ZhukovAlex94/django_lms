@@ -6,7 +6,7 @@ from django.urls import reverse
 # from webargs.djangoparser import use_args
 # from webargs.fields import Str
 
-from .forms import CreateStudentForm, UpdateStudentForm, StudentFilterForm
+from .forms import CreateStudentForm, StudentFilterForm, UpdateStudentForm
 from .models import Student
 
 
@@ -43,7 +43,6 @@ def detail_student(request, student_id):
     return render(request, 'students/detail.html', {'student': student})
 
 
-# @csrf_exempt
 def create_student(request):
     if request.method == 'GET':
         form = CreateStudentForm()
