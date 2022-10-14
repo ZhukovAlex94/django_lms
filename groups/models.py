@@ -5,7 +5,7 @@ from core.validators import validate_start_date
 from django.core.validators import MinLengthValidator
 from django.db import models
 
-# from students.models import Student
+from courses.models import Course
 
 
 class Group(models.Model):
@@ -38,4 +38,4 @@ class Group(models.Model):
         db_table = 'groups'
 
     def __str__(self):
-        return f"Group name: <<{self.group_name}>> "
+        return f"Group: '{self.group_name}'"

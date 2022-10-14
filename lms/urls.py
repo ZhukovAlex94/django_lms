@@ -28,6 +28,8 @@ urlpatterns = [
     path('groups/', include('groups.urls')),
 
     path('teachers/', include('teachers.urls')),
+
+    path('courses/', include('courses.urls')),
 ]
 
 # https://docs.djangoproject.com:8000/en/4.1/topics/http/urls/

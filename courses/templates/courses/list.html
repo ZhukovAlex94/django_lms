@@ -2,7 +2,7 @@
 
 {% load crispy_forms_filters %}
 
-{% block title %}List of groups{% endblock %}
+{% block title %}List of courses{% endblock %}
 
 {% block content %}
     <div class="row mb-3">
@@ -10,7 +10,7 @@
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Search group
+                    Search course
                 </button>
             </h2>
             <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -32,30 +32,26 @@
             <thead>
                 <tr align="center">
                     <th>No.</th>
-                    <th>Group name</th>
-                    <th>Headman</th>
-                    <th>Course</th>
-                    <th>Start date</th>
-                    <th>End date</th>
+                    <th>Course name</th>
+                    <th>Group</th>
+                    <th>Duration</th>
                     <th><i class="bi bi-pencil-fill"></i></th>
                     <th><i class="bi bi-trash-fill"></i></th>
                 </tr>
             </thead>
             <tbody>
-                {% for group in filter_form.qs %}
+                {% for course in filter_form.qs %}
                     <tr align="center">
                         <td>{{ forloop.counter }}</td>
-                        <td><a href="{% url 'groups:detail' group.pk %}">{{ group.group_name }}</a></td>
+                        <td><a href="{% url 'courses:detail' course.pk %}">{{ course.course_name }}</a></td>
                         <td>
-                            {% if group.headman %}
-                                {{ group.headman.first_name }} {{ group.headman.last_name }}
+                            {% if course.group %}
+                                {{ course.group.group_name }}
                             {% endif %}
                         </td>
-                        <td>{{ group.course_group }}</td>
-                        <td>{{ group.group_start_date }}</td>
-                        <td>{{ group.group_end_date }}</td>
-                        <td><a class="btn btn-outline-primary btn-sm" href="{% url 'groups:update' group.pk %}">Edit</a></td>
-                        <td><a class="btn btn-outline-danger btn-sm" href="{% url 'groups:delete' group.pk %}">Delete</a></td>
+                        <td>{{ course.duration }}</td>
+                        <td><a class="btn btn-outline-primary btn-sm" href="{% url 'courses:update' course.pk %}">Edit</a></td>
+                        <td><a class="btn btn-outline-danger btn-sm" href="{% url 'courses:delete' course.pk %}">Delete</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
