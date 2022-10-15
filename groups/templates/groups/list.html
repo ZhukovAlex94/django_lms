@@ -42,7 +42,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for group in filter_form.qs %}
+                {% for group in object_list %}
                     <tr align="center">
                         <td>{{ forloop.counter }}</td>
                         <td><a href="{% url 'groups:detail' group.pk %}">{{ group.group_name }}</a></td>
