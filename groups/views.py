@@ -8,20 +8,6 @@ from .forms import CreateGroupForm, UpdateGroupForm
 from .models import Group
 
 
-# def get_groups(request):
-#     groups = Group.objects.all()
-#
-#     filter_form = GroupFilterForm(data=request.GET, queryset=groups)
-#
-#     return render(
-#         request=request,
-#         template_name='groups/list.html',
-#         context={
-#             'filter_form': filter_form,
-#         }
-#     )
-
-
 class ListGroupView(ListView):
     model = Group
     template_name = 'groups/list.html'
@@ -37,11 +23,6 @@ def create_group(request):
             return HttpResponseRedirect(reverse('groups:list'))
 
     return render(request, 'groups/create.html', {'form': form})
-
-
-# def detail_group(request, group_id):
-#     group = Group.objects.get(pk=group_id)
-#     return render(request, 'groups/detail.html', {'group': group})
 
 
 class DetailGroupView(DetailView):
@@ -104,16 +85,6 @@ class UpdateGroupView(UpdateView):
         form.save()
 
         return response
-
-
-# def delete_group(request, group_id):
-#     group = get_object_or_404(Group, pk=group_id)
-#
-#     if request.method == 'POST':
-#         group.delete()
-#         return HttpResponseRedirect(reverse('groups:list'))
-#
-#     return render(request, 'groups/delete.html', {'group': group})
 
 
 class DeleteGroupView(DeleteView):
