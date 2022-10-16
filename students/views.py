@@ -1,30 +1,36 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, ListView, DetailView, DeleteView
 
-from core.views import CustomUpdateBaseView
+# from core.views import CustomUpdateBaseView
 from .forms import CreateStudentForm, StudentFilterForm, UpdateStudentForm
 from .models import Student
 
 
-def get_students(request):
-    students = Student.objects.select_related('group')
+# def get_students(request):
+#     students = Student.objects.select_related('group')
+#
+#     filter_form = StudentFilterForm(data=request.GET, queryset=students)
+#
+#     return render(
+#         request=request,
+#         template_name='students/list.html',
+#         context={
+#             'filter_form': filter_form
+#         }
+#     )
 
-    filter_form = StudentFilterForm(data=request.GET, queryset=students)
 
-    return render(
-        request=request,
-        template_name='students/list.html',
-        context={
-            'filter_form': filter_form
-        }
-    )
+class ListStudentView(ListView):
+    model = Student
+    template_name = 'students/list.html'
+    context_object_name = ''
 
 
-def detail_student(request, student_id):
-    student = get_object_or_404(Student, pk=student_id)
-    return render(request, 'students/detail.html', {'student': student})
+class DetailStudentView(DetailView):
+    model = Student
+    template_name = 'students/detail.html'
 
 
 def create_student(request):
@@ -69,11 +75,7 @@ class UpdateStudentView(UpdateView):
     template_name = 'students/update.html'
 
 
-def delete_student(request, student_id):
-    student = get_object_or_404(Student, pk=student_id)
-
-    if request.method == 'POST':
-        student.delete()
-        return HttpResponseRedirect(reverse('students:list'))
-
-    return render(request, 'students/delete.html', {'student': student})
+class DeleteStudentView(DeleteView):
+    model = Student
+    template_name = 'students/delete.html'
+    success_url = reverse_lazy('students:list')
