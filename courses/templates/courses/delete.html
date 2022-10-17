@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete course{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <p>Do you really want to remove course: "{{ course.course_name }}"?</p>
+        <input class="btn btn-outline-danger mt-3 btn-sm" type="submit" value="Agree">
+        <a class="btn btn-outline-success mt-3 btn-sm" href="{% url 'courses:list' %}">Cancel</a>
+    </form>
+{% endblock %}

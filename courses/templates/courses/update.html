@@ -2,7 +2,7 @@
 
 {% load crispy_forms_filters %}
 
-{% block title %}Update group{% endblock %}
+{% block title %}Update course{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -12,15 +12,9 @@
                     {% csrf_token %}
                     {{ form|crispy }}
                     <input class="btn btn-outline-success mt-3 btn-sm" type="submit" value="Update">
-                    <a class="btn btn-outline-danger mt-3 btn-sm" href="{% url 'groups:list' %}">Cancel</a>
+                    <a class="btn btn-outline-danger mt-3 btn-sm" href="{% url 'courses:list' %}">Cancel</a>
                 </form>
             </div>
         <div class="col-3"></div>
-    </div>
-    <div class="row">
-    </div>
-        {% with objects_list=group.students.all group_on=False %}
-            {% include 'includes/students_tab.html' %}
-        {% endwith %}
     </div>
 {% endblock %}
