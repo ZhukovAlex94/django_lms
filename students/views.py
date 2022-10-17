@@ -1,7 +1,6 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse, reverse_lazy
-from django.views.generic import UpdateView, ListView, DetailView, DeleteView, CreateView
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 
 # from core.views import CustomUpdateBaseView
 from .forms import CreateStudentForm, StudentFilterForm, UpdateStudentForm
@@ -48,8 +47,8 @@ class DetailStudentView(DetailView):
 class CreateStudentView(CreateView):
     model = Student
     template_name = 'students/create.html'
+    form_class = CreateStudentForm
     success_url = reverse_lazy('students:list')
-    fields = '__all__'
 
 
 # def update_student(request, student_id):

@@ -1,6 +1,7 @@
 from random import randint
 
 from core.models import PersonModel
+
 from django.db import models
 
 

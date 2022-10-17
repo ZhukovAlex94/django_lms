@@ -1,9 +1,10 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import UpdateView, ListView, DeleteView, DetailView
+from django.views.generic import DeleteView, DetailView, ListView, UpdateView, CreateView
 
 from students.models import Student
+
 from .forms import CreateGroupForm, UpdateGroupForm
 from .models import Group
 
@@ -23,6 +24,13 @@ def create_group(request):
             return HttpResponseRedirect(reverse('groups:list'))
 
     return render(request, 'groups/create.html', {'form': form})
+
+
+# class CreateGroupView(CreateView):
+#     model = Group
+#     success_url = reverse_lazy('groups:list')
+#     template_name = 'groups/create.html'
+#     form_class = CreateGroupForm
 
 
 class DetailGroupView(DetailView):

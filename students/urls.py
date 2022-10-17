@@ -1,9 +1,10 @@
 from django.urls import path
 
-from .views import (DetailStudentView, DeleteStudentView, get_students, CreateStudentView)
+from .views import (CreateStudentView, DeleteStudentView, DetailStudentView, UpdateStudentView)
+from .views import get_students
 
 # from .views import CustomUpdateStudentView
-from .views import UpdateStudentView
+
 # from .views import ListStudentView
 
 app_name = 'students'

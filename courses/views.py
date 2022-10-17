@@ -1,8 +1,8 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 
-from .forms import CreateCourseForm, CourseFilterForm, UpdateCourseForm
+from .forms import CourseFilterForm, CreateCourseForm, UpdateCourseForm
 from .models import Course
 
 
@@ -20,42 +20,36 @@ def get_courses(request):
     )
 
 
-def create_course(request):
-    if request.method == 'GET':
-        form = CreateCourseForm()
-    elif request.method == 'POST':
-        form = CreateCourseForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('courses:list'))
-
-    return render(request, 'courses/create.html', {'form': form})
+class CreateCourseView(CreateView):
+    model = Course
+    template_name = 'courses/create.html'
+    success_url = reverse_lazy('courses:list')
+    form_class = CreateCourseForm
 
 
-def detail_course(request, course_id):
-    course = Course.objects.get(pk=course_id)
-    return render(request, 'courses/detail.html', {'course': course})
+class DetailCourseView(DetailView):
+    model = Course
+    template_name = 'courses/detail.html'
 
 
-def update_course(request, course_id):
-    course = get_object_or_404(Course, pk=course_id)
-
-    if request.method == 'GET':
-        form = UpdateCourseForm(instance=course)
-    elif request.method == 'POST':
-        form = UpdateCourseForm(request.POST, instance=course)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('courses:list'))
-
-    return render(request, 'courses/update.html', {'form': form, 'course': course})
+class UpdateCourseView(UpdateView):
+    model = Course
+    template_name = 'courses/update.html'
+    form_class = UpdateCourseForm
+    success_url = reverse_lazy('courses:list')
 
 
-def delete_course(request, course_id):
-    course = get_object_or_404(Course, pk=course_id)
+# def delete_course(request, course_id):
+#     course = get_object_or_404(Course, pk=course_id)
+#
+#     if request.method == 'POST':
+#         course.delete()
+#         return HttpResponseRedirect(reverse('courses:list'))
+#
+#     return render(request, 'courses/delete.html', {'course': course})
 
-    if request.method == 'POST':
-        course.delete()
-        return HttpResponseRedirect(reverse('courses:list'))
 
-    return render(request, 'courses/delete.html', {'course': course})
+class DeleteCourseView(DeleteView):
+    model = Course
+    template_name = 'courses/delete.html'
+    success_url = reverse_lazy('courses:list')

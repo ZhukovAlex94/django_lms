@@ -1,6 +1,6 @@
 from datetime import date
 
-from faker import Faker
+# from faker import Faker
 
 from core.models import BaseModel
 from core.validators import validate_start_date
@@ -44,7 +44,7 @@ class Group(BaseModel):
 
     @classmethod
     def gen_group(cls):
-        f = Faker()
+        # f = Faker()
         lst = [
             'Python',
             'Java',
