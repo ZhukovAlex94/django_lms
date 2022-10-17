@@ -1,10 +1,11 @@
 from django import forms
+
 from django_filters import FilterSet
 
 from .models import Student
 
 
-class CreateStudentForm(forms.ModelForm):
+class BaseStudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = [
@@ -42,9 +43,12 @@ class CreateStudentForm(forms.ModelForm):
         return "".join(char for char in value if char in "0123456789-()")
 
 
-class UpdateStudentForm(forms.ModelForm):
-    class Meta:
-        model = Student
+class CreateStudentForm(BaseStudentForm):
+    pass
+
+
+class UpdateStudentForm(BaseStudentForm):
+    class Meta(BaseStudentForm.Meta):
         fields = [
             # '__all__',
             'first_name',

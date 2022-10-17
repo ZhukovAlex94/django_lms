@@ -1,9 +1,11 @@
 from django import forms
 
+from django_filters import FilterSet
+
 from .models import Teacher
 
 
-class CreateTeacherForm(forms.ModelForm):
+class BaseTeacherForm(forms.ModelForm):
     class Meta:
         model = Teacher
         fields = [
@@ -38,9 +40,12 @@ class CreateTeacherForm(forms.ModelForm):
         return "".join(char for char in value if char in "0123456789-()")
 
 
-class UpdateTeacherForm(forms.ModelForm):
-    class Meta:
-        model = Teacher
+class CreateTeacherForm(BaseTeacherForm):
+    pass
+
+
+class UpdateTeacherForm(BaseTeacherForm):
+    class Meta(BaseTeacherForm.Meta):
         fields = [
             # '__all__',
             'first_name',
@@ -52,4 +57,13 @@ class UpdateTeacherForm(forms.ModelForm):
 
         widgets = {
             'birthday': forms.DateInput(attrs={'type': 'date'})
+        }
+
+
+class TeacherFilterForm(FilterSet):
+    class Meta:
+        model = Teacher
+        fields = {
+            'first_name': ['exact', 'icontains'],
+            'last_name': ['exact', 'startswith'],
         }
