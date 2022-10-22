@@ -8,7 +8,6 @@ from core.validators import validate_start_date
 from django.core.validators import MinLengthValidator
 from django.db import models
 
-# from courses.models import Course
 from teachers.models import Teacher
 
 

@@ -1,70 +1,33 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 # from core.views import CustomUpdateBaseView
 from .forms import CreateStudentForm, StudentFilterForm, UpdateStudentForm
 from .models import Student
 
 
-def get_students(request):
-    students = Student.objects.select_related('group')
+class ListStudentView(ListView):
+    model = Student
+    template_name = 'students/list.html'
 
-    filter_form = StudentFilterForm(data=request.GET, queryset=students)
+    def get_queryset(self):
+        students = Student.objects.select_related('group')
+        filter_form = StudentFilterForm(data=self.request.GET, queryset=students)
 
-    return render(
-        request=request,
-        template_name='students/list.html',
-        context={
-            'filter_form': filter_form
-        }
-    )
+        return filter_form
 
 
-# class ListStudentView(ListView):
-#     model = Student
-#     template_name = 'students/list.html'
-#     context_object_name = ''
-
-
-class DetailStudentView(DetailView):
+class DetailStudentView(LoginRequiredMixin, DetailView):
     model = Student
     template_name = 'students/detail.html'
 
 
-# def create_student(request):
-#     if request.method == 'GET':
-#         form = CreateStudentForm()
-#     elif request.method == 'POST':
-#         form = CreateStudentForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect(reverse('students:list'))
-#
-#     return render(request, 'students/create.html', {'form': form})
-
-
-class CreateStudentView(CreateView):
+class CreateStudentView(LoginRequiredMixin, CreateView):
     model = Student
     template_name = 'students/create.html'
     form_class = CreateStudentForm
     success_url = reverse_lazy('students:list')
-
-
-# def update_student(request, student_id):
-#     student = get_object_or_404(Student, pk=student_id)
-#
-#     if request.method == 'GET':
-#         form = UpdateStudentForm(instance=student)
-#     elif request.method == 'POST':
-#         form = UpdateStudentForm(request.POST, instance=student)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect(reverse('students:list'))
-#
-#     form = UpdateStudentForm(instance=student)
-#
-#     return render(request, 'students/update.html', {'form': form})
 
 
 # class CustomUpdateStudentView(CustomUpdateBaseView):
@@ -74,14 +37,14 @@ class CreateStudentView(CreateView):
 #     template_name = 'students/update.html'
 
 
-class UpdateStudentView(UpdateView):
+class UpdateStudentView(LoginRequiredMixin, UpdateView):
     model = Student
     form_class = UpdateStudentForm
     success_url = reverse_lazy('students:list')
     template_name = 'students/update.html'
 
 
-class DeleteStudentView(DeleteView):
+class DeleteStudentView(LoginRequiredMixin, DeleteView):
     model = Student
     template_name = 'students/delete.html'
     success_url = reverse_lazy('students:list')

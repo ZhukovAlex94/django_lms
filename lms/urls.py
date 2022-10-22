@@ -30,6 +30,10 @@ urlpatterns = [
     path('teachers/', include('teachers.urls')),
 
     path('courses/', include('courses.urls')),
+
+    path('accounts/', include('accounts.urls')),
+
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 # https://docs.djangoproject.com:8000/en/4.1/topics/http/urls/
