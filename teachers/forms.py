@@ -12,7 +12,6 @@ class BaseTeacherForm(forms.ModelForm):
           # '__all__',
           'first_name',
           'last_name',
-          'job',
           'birthday',
           'email',
           'phone_number',
@@ -51,7 +50,6 @@ class UpdateTeacherForm(BaseTeacherForm):
             'first_name',
             'last_name',
             'birthday',
-            'job',
             'phone_number',
         ]
 
