@@ -19,7 +19,7 @@
     </div>
     <div class="row">
     </div>
-        {% with objects_list=group.students.all group_on=False %}
+        {% with objects_list=students group_on=False %}
             {% include 'includes/students_tab.html' %}
         {% endwith %}
     </div>
