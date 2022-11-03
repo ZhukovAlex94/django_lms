@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'courses.apps.CoursesConfig',
     'core.apps.CoreConfig',
     'accounts.apps.AccountsConfig',
+
+    'rangefilter',
 ]
 
 MIDDLEWARE = [
