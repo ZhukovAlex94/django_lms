@@ -61,7 +61,7 @@
                             {{ group.headman.first_name }} {{ group.headman.last_name }}
                         {% endif %}
                     </td>
-                    <td>{{ group.course_group }}</td>
+                    <td>{{ group__course_group }}</td>
                     <td>{{ group.group_start_date }}</td>
                     <td>{{ group.group_end_date }}</td>
                     {% if user.is_authenticated %}
