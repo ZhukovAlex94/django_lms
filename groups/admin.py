@@ -20,6 +20,31 @@ class StudentInlineTable(admin.TabularInline):
         return False
 
 
+class TeacherInlineTable(admin.TabularInline):
+    model = Group.teachers.through
+    fields = ('last_name', 'first_name', 'email', 'salary',)
+    extra = 0
+    readonly_fields = fields
+
+    def first_name(self, obj):  # noqa
+        return obj.teacher.first_name
+
+    def last_name(self, obj):  # noqa
+        return obj.teacher.last_name
+
+    def email(self, obj):  # noqa
+        return obj.teacher.email
+
+    def salary(self, obj):  # noqa
+        return obj.teacher.salary
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_add_permission(self, request, obj):
+        return False
+
+
 @admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):
     list_display = ('group_name', 'group_start_date', 'group_start_date',)
@@ -29,7 +54,7 @@ class GroupAdmin(admin.ModelAdmin):
         ('Group info', {'fields': ('group_name',)}),
         ('Group dates', {'fields': ('group_start_date', 'group_end_date')}),
         ('Group description', {'fields': ('group_description',)}),
-        ('Teachers and Headman', {'fields': ('teachers', 'headman')}),
+        ('Teachers and Headman', {'fields': ('headman',)}),
         ('Fixed dates', {'fields': ('create_datetime', 'update_datetime')}),
     )
 
@@ -44,4 +69,4 @@ class GroupAdmin(admin.ModelAdmin):
 
         return form
 
-    inlines = [StudentInlineTable, ]
+    inlines = [StudentInlineTable, TeacherInlineTable, ]
